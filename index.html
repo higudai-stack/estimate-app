@@ -1,297 +1,282 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>見積書作成（叩き台）</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; margin: 16px; }
+    h1 { font-size: 18px; margin: 0 0 12px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; }
+    label { display: block; font-size: 12px; color: #555; margin-top: 8px; }
+    input, textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; font-size: 13px; }
+    th { background: #f7f7f7; text-align: left; }
+    .right { text-align: right; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    button { padding: 8px 12px; border: 1px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer; }
+    button.primary { border-color: #333; }
+    .totals { margin-top: 12px; display: grid; grid-template-columns: 1fr 220px; gap: 12px; align-items: start; }
+    .totals table { margin: 0; }
+    .note { font-size: 12px; color: #666; margin-top: 8px; }
+
+    /* 印刷用 */
+    @media print {
+      .no-print { display: none !important; }
+      body { margin: 0; }
+      .card { border: none; padding: 0; }
+      input, textarea { border: none; padding: 0; }
+      table, th, td { border-color: #999; }
+    }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ja"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;見積書作成（叩き台）&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; margin: 16px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1 { font-size: 18px; margin: 0 0 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>label { display: block; font-size: 12px; color: #555; margin-top: 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>input, textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>table { width: 100%; border-collapse: collapse; margin-top: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>th, td { border: 1px solid #ddd; padding: 8px; font-size: 13px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>th { background: #f7f7f7; text-align: left; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.right { text-align: right; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button { padding: 8px 12px; border: 1px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button.primary { border-color: #333; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.totals { margin-top: 12px; display: grid; grid-template-columns: 1fr 220px; gap: 12px; align-items: start; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.totals table { margin: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.note { font-size: 12px; color: #666; margin-top: 8px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* 印刷用 */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media print {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.no-print { display: none !important; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>body { margin: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.card { border: none; padding: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>input, textarea { border: none; padding: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>table, th, td { border-color: #999; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- React (CDN) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script type="text/babel"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const STORAGE_KEY = "estimate_draft_v1";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function yen(n) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const v = Number(n || 0);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return v.toLocaleString("ja-JP");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function todayISO() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const d = new Date();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const y = d.getFullYear();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const m = String(d.getMonth() + 1).padStart(2, "0");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const day = String(d.getDate()).padStart(2, "0");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `${y}-${m}-${day}`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function defaultEstimate() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>estimateNo: "EST-" + new Date().getTime(),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>issueDate: todayISO(),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>validUntil: "",</p>
-<p class="p1"><span class="Apple-converted-space">        </span>customer: { company: "", person: "", address: "" },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>issuer:<span class="Apple-converted-space">  </span>{ company: "", person: "", address: "", tel: "" },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>taxRate: 0.10,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>rounding: "floor", // floor | round | ceil</p>
-<p class="p1"><span class="Apple-converted-space">        </span>items: [</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ name: "作業費", qty: 1, unitPrice: 0 }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>],</p>
-<p class="p1"><span class="Apple-converted-space">        </span>notes: ""</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function applyRounding(value, mode) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (mode === "ceil") return Math.ceil(value);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (mode === "round") return Math.round(value);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return Math.floor(value);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function App() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const [est, setEst] = React.useState(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const saved = localStorage.getItem(STORAGE_KEY);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (saved) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>try { return JSON.parse(saved); } catch(e) {}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return defaultEstimate();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const subtotal = React.useMemo(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const sum = est.items.reduce((acc, it) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const qty = Number(it.qty || 0);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const up<span class="Apple-converted-space">  </span>= Number(it.unitPrice || 0);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return acc + (qty * up);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}, 0);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return applyRounding(sum, est.rounding);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}, [est.items, est.rounding]);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const tax = React.useMemo(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return applyRounding(subtotal * Number(est.taxRate || 0), est.rounding);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}, [subtotal, est.taxRate, est.rounding]);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const total = subtotal + tax;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function update(path, value) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setEst(prev =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const next = structuredClone(prev);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>// path例: "customer.company"</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const keys = path.split(".");</p>
-<p class="p1"><span class="Apple-converted-space">          </span>let obj = next;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>for (let i = 0; i &lt; keys.length - 1; i++) obj = obj[keys[i]];</p>
-<p class="p1"><span class="Apple-converted-space">          </span>obj[keys[keys.length - 1]] = value;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return next;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function updateItem(idx, key, value) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setEst(prev =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const next = structuredClone(prev);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>next.items[idx][key] = value;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return next;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function addItem() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setEst(prev =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const next = structuredClone(prev);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>next.items.push({ name: "", qty: 1, unitPrice: 0 });</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return next;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function removeItem(idx) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setEst(prev =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const next = structuredClone(prev);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>next.items.splice(idx, 1);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (next.items.length === 0) next.items.push({ name: "", qty: 1, unitPrice: 0 });</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return next;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function saveDraft() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>localStorage.setItem(STORAGE_KEY, JSON.stringify(est));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>alert("下書きを保存しました。");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function loadDraft() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const saved = localStorage.getItem(STORAGE_KEY);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!saved) return alert("保存データが見つかりません。");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>setEst(JSON.parse(saved));</p>
-<p class="p1"><span class="Apple-converted-space">          </span>alert("下書きを読み込みました。");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} catch (e) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>alert("読み込みに失敗しました。");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function newEstimate() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!confirm("新規作成します。現在の内容は消えます（保存していない場合）。よろしいですか？")) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setEst(defaultEstimate());</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function printPDF() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>window.print();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1&gt;見積書作成（叩き台）&lt;/h1&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 style={{fontSize: "14px", margin: 0}}&gt;見積情報&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;見積番号&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.estimateNo} onChange={e =&gt; update("estimateNo", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;発行日&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input type="date" value={est.issueDate} onChange={e =&gt; update("issueDate", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;有効期限&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input type="date" value={est.validUntil} onChange={e =&gt; update("validUntil", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;消費税率&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input type="number" step="0.01" value={est.taxRate} onChange={e =&gt; update("taxRate", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;端数処理&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;select value={est.rounding} onChange={e =&gt; update("rounding", e.target.value)} style={{width:"100%", padding:"8px", borderRadius:"6px"}}&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="floor"&gt;切り捨て&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="round"&gt;四捨五入&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="ceil"&gt;切り上げ&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/select&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 style={{fontSize: "14px", margin: 0}}&gt;宛先&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;会社名&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.customer.company} onChange={e =&gt; update("customer.company", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;担当者&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.customer.person} onChange={e =&gt; update("customer.person", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;住所&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;textarea rows="3" value={est.customer.address} onChange={e =&gt; update("customer.address", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 style={{fontSize: "14px", margin: 0}}&gt;発行者（自社）&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;会社名&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.issuer.company} onChange={e =&gt; update("issuer.company", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;担当者&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.issuer.person} onChange={e =&gt; update("issuer.person", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;住所&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;textarea rows="3" value={est.issuer.address} onChange={e =&gt; update("issuer.address", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;TEL&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input value={est.issuer.tel} onChange={e =&gt; update("issuer.tel", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 style={{fontSize: "14px", margin: 0}}&gt;備考&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label&gt;備考欄&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;textarea rows="8" value={est.notes} onChange={e =&gt; update("notes", e.target.value)} /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="note"&gt;印刷時は入力枠が消えて“見積書っぽく”表示されます。&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="card" style={{marginTop:"12px"}}&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style={{fontSize: "14px", margin: 0}}&gt;明細&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;th style={{width:"50%"}}&gt;品目&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;th style={{width:"12%"}} className="right"&gt;数量&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;th style={{width:"18%"}} className="right"&gt;単価&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;th style={{width:"20%"}} className="right"&gt;金額&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;th className="no-print" style={{width:"70px"}}&gt;&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{est.items.map((it, idx) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>const qty = Number(it.qty || 0);</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>const up<span class="Apple-converted-space">  </span>= Number(it.unitPrice || 0);</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>const amount = applyRounding(qty * up, est.rounding);</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr key={idx}&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;td&gt;&lt;input value={it.name} onChange={e =&gt; updateItem(idx, "name", e.target.value)} /&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;td className="right"&gt;&lt;input type="number" value={it.qty} onChange={e =&gt; updateItem(idx, "qty", e.target.value)} /&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;td className="right"&gt;&lt;input type="number" value={it.unitPrice} onChange={e =&gt; updateItem(idx, "unitPrice", e.target.value)} /&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;td className="right"&gt;{yen(amount)}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;td className="no-print"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onClick={() =&gt; removeItem(idx)}&gt;削除&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>})}</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/table&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="actions no-print"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button onClick={addItem} className="primary"&gt;行を追加&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="totals"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;tr&gt;&lt;th&gt;小計&lt;/th&gt;&lt;td className="right"&gt;{yen(subtotal)}&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;tr&gt;&lt;th&gt;消費税&lt;/th&gt;&lt;td className="right"&gt;{yen(tax)}&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;tr&gt;&lt;th&gt;合計&lt;/th&gt;&lt;td className="right"&gt;&lt;strong&gt;{yen(total)}&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="actions no-print"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button onClick={saveDraft} className="primary"&gt;下書き保存&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button onClick={loadDraft}&gt;下書き読込&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button onClick={newEstimate}&gt;新規&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button onClick={printPDF} className="primary"&gt;印刷（PDF保存）&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>ReactDOM.createRoot(document.getElementById("root")).render(&lt;App /&gt;);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <div id="root"></div>
+
+  <!-- React (CDN) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const STORAGE_KEY = "estimate_draft_v1";
+
+    function yen(n) {
+      const v = Number(n || 0);
+      return v.toLocaleString("ja-JP");
+    }
+
+    function todayISO() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function defaultEstimate() {
+      return {
+        estimateNo: "EST-" + new Date().getTime(),
+        issueDate: todayISO(),
+        validUntil: "",
+        customer: { company: "", person: "", address: "" },
+        issuer:  { company: "", person: "", address: "", tel: "" },
+        taxRate: 0.10,
+        rounding: "floor", // floor | round | ceil
+        items: [
+          { name: "作業費", qty: 1, unitPrice: 0 }
+        ],
+        notes: ""
+      };
+    }
+
+    function applyRounding(value, mode) {
+      if (mode === "ceil") return Math.ceil(value);
+      if (mode === "round") return Math.round(value);
+      return Math.floor(value);
+    }
+
+    function App() {
+      const [est, setEst] = React.useState(() => {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try { return JSON.parse(saved); } catch(e) {}
+        }
+        return defaultEstimate();
+      });
+
+      const subtotal = React.useMemo(() => {
+        const sum = est.items.reduce((acc, it) => {
+          const qty = Number(it.qty || 0);
+          const up  = Number(it.unitPrice || 0);
+          return acc + (qty * up);
+        }, 0);
+        return applyRounding(sum, est.rounding);
+      }, [est.items, est.rounding]);
+
+      const tax = React.useMemo(() => {
+        return applyRounding(subtotal * Number(est.taxRate || 0), est.rounding);
+      }, [subtotal, est.taxRate, est.rounding]);
+
+      const total = subtotal + tax;
+
+      function update(path, value) {
+        setEst(prev => {
+          const next = structuredClone(prev);
+          // path例: "customer.company"
+          const keys = path.split(".");
+          let obj = next;
+          for (let i = 0; i < keys.length - 1; i++) obj = obj[keys[i]];
+          obj[keys[keys.length - 1]] = value;
+          return next;
+        });
+      }
+
+      function updateItem(idx, key, value) {
+        setEst(prev => {
+          const next = structuredClone(prev);
+          next.items[idx][key] = value;
+          return next;
+        });
+      }
+
+      function addItem() {
+        setEst(prev => {
+          const next = structuredClone(prev);
+          next.items.push({ name: "", qty: 1, unitPrice: 0 });
+          return next;
+        });
+      }
+
+      function removeItem(idx) {
+        setEst(prev => {
+          const next = structuredClone(prev);
+          next.items.splice(idx, 1);
+          if (next.items.length === 0) next.items.push({ name: "", qty: 1, unitPrice: 0 });
+          return next;
+        });
+      }
+
+      function saveDraft() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(est));
+        alert("下書きを保存しました。");
+      }
+
+      function loadDraft() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return alert("保存データが見つかりません。");
+        try {
+          setEst(JSON.parse(saved));
+          alert("下書きを読み込みました。");
+        } catch (e) {
+          alert("読み込みに失敗しました。");
+        }
+      }
+
+      function newEstimate() {
+        if (!confirm("新規作成します。現在の内容は消えます（保存していない場合）。よろしいですか？")) return;
+        setEst(defaultEstimate());
+      }
+
+      function printPDF() {
+        window.print();
+      }
+
+      return (
+        <div>
+          <h1>見積書作成（叩き台）</h1>
+
+          <div className="grid">
+            <div className="card">
+              <h2 style={{fontSize: "14px", margin: 0}}>見積情報</h2>
+              <label>見積番号</label>
+              <input value={est.estimateNo} onChange={e => update("estimateNo", e.target.value)} />
+              <label>発行日</label>
+              <input type="date" value={est.issueDate} onChange={e => update("issueDate", e.target.value)} />
+              <label>有効期限</label>
+              <input type="date" value={est.validUntil} onChange={e => update("validUntil", e.target.value)} />
+              <label>消費税率</label>
+              <input type="number" step="0.01" value={est.taxRate} onChange={e => update("taxRate", e.target.value)} />
+              <label>端数処理</label>
+              <select value={est.rounding} onChange={e => update("rounding", e.target.value)} style={{width:"100%", padding:"8px", borderRadius:"6px"}}>
+                <option value="floor">切り捨て</option>
+                <option value="round">四捨五入</option>
+                <option value="ceil">切り上げ</option>
+              </select>
+            </div>
+
+            <div className="card">
+              <h2 style={{fontSize: "14px", margin: 0}}>宛先</h2>
+              <label>会社名</label>
+              <input value={est.customer.company} onChange={e => update("customer.company", e.target.value)} />
+              <label>担当者</label>
+              <input value={est.customer.person} onChange={e => update("customer.person", e.target.value)} />
+              <label>住所</label>
+              <textarea rows="3" value={est.customer.address} onChange={e => update("customer.address", e.target.value)} />
+            </div>
+
+            <div className="card">
+              <h2 style={{fontSize: "14px", margin: 0}}>発行者（自社）</h2>
+              <label>会社名</label>
+              <input value={est.issuer.company} onChange={e => update("issuer.company", e.target.value)} />
+              <label>担当者</label>
+              <input value={est.issuer.person} onChange={e => update("issuer.person", e.target.value)} />
+              <label>住所</label>
+              <textarea rows="3" value={est.issuer.address} onChange={e => update("issuer.address", e.target.value)} />
+              <label>TEL</label>
+              <input value={est.issuer.tel} onChange={e => update("issuer.tel", e.target.value)} />
+            </div>
+
+            <div className="card">
+              <h2 style={{fontSize: "14px", margin: 0}}>備考</h2>
+              <label>備考欄</label>
+              <textarea rows="8" value={est.notes} onChange={e => update("notes", e.target.value)} />
+              <div className="note">印刷時は入力枠が消えて“見積書っぽく”表示されます。</div>
+            </div>
+          </div>
+
+          <div className="card" style={{marginTop:"12px"}}>
+            <h2 style={{fontSize: "14px", margin: 0}}>明細</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th style={{width:"50%"}}>品目</th>
+                  <th style={{width:"12%"}} className="right">数量</th>
+                  <th style={{width:"18%"}} className="right">単価</th>
+                  <th style={{width:"20%"}} className="right">金額</th>
+                  <th className="no-print" style={{width:"70px"}}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {est.items.map((it, idx) => {
+                  const qty = Number(it.qty || 0);
+                  const up  = Number(it.unitPrice || 0);
+                  const amount = applyRounding(qty * up, est.rounding);
+                  return (
+                    <tr key={idx}>
+                      <td><input value={it.name} onChange={e => updateItem(idx, "name", e.target.value)} /></td>
+                      <td className="right"><input type="number" value={it.qty} onChange={e => updateItem(idx, "qty", e.target.value)} /></td>
+                      <td className="right"><input type="number" value={it.unitPrice} onChange={e => updateItem(idx, "unitPrice", e.target.value)} /></td>
+                      <td className="right">{yen(amount)}</td>
+                      <td className="no-print">
+                        <button onClick={() => removeItem(idx)}>削除</button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            <div className="actions no-print">
+              <button onClick={addItem} className="primary">行を追加</button>
+            </div>
+
+            <div className="totals">
+              <div></div>
+              <table>
+                <tbody>
+                  <tr><th>小計</th><td className="right">{yen(subtotal)}</td></tr>
+                  <tr><th>消費税</th><td className="right">{yen(tax)}</td></tr>
+                  <tr><th>合計</th><td className="right"><strong>{yen(total)}</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="actions no-print">
+              <button onClick={saveDraft} className="primary">下書き保存</button>
+              <button onClick={loadDraft}>下書き読込</button>
+              <button onClick={newEstimate}>新規</button>
+              <button onClick={printPDF} className="primary">印刷（PDF保存）</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
 </body>
 </html>
+
